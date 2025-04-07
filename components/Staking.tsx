@@ -20,6 +20,7 @@ import {
 } from "thirdweb/extensions/erc721";
 import { NFTCard } from "./NFTCard";
 import { StakedNFTCard } from "./StakedNFTCard";
+import { toast } from "react-toastify";
 
 export const Staking = () => {
   const account = useActiveAccount();
@@ -99,7 +100,15 @@ export const Staking = () => {
               })
             }
             onTransactionConfirmed={() => {
-              alert("NFT claimed!");
+              toast.success("NFT가 성공적으로 수령되었습니다!", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
               getOwnedNFTs();
             }}
             style={{
@@ -110,7 +119,7 @@ export const Staking = () => {
               borderRadius: "10px",
             }}
           >
-            Claim NFT
+            NFT 수령하기
           </TransactionButton>
         </div>
         <hr
@@ -145,7 +154,7 @@ export const Staking = () => {
                 />
               ))
             ) : (
-              <p>You own 0 NFTs</p>
+              <p>보유 중인 NFT가 없습니다</p>
             )}
           </div>
         </div>
@@ -176,7 +185,7 @@ export const Staking = () => {
                 />
               ))
             ) : (
-              <p style={{ margin: "20px" }}>No NFTs staked</p>
+              <p style={{ margin: "20px" }}>스테이킹된 NFT가 없습니다</p>
             )}
           </div>
         </div>

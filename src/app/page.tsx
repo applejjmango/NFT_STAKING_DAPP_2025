@@ -15,9 +15,11 @@ export default function Home() {
         width: "500px",
       }}
     >
-      <h1>NFT 스테이킹 하고 보상 받아보세요</h1>
+      <h1 style={{ color: '#ffffff' }}>NFT 스테이킹 하고 보상 받아보세요</h1>
       <ToastContainer />
-      <ConnectEmbed client={client} chain={chain} />
+      <div style={{ position: 'relative' }}>
+        <ConnectEmbed client={client} chain={chain} />
+      </div>
       <Staking />
     </div>
   );

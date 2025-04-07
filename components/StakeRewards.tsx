@@ -7,6 +7,7 @@ import { REWARD_TOKEN_CONTRACT, STAKING_CONTRACT } from "../utils/contracts";
 import { prepareContractCall, toEther } from "thirdweb";
 import { useEffect } from "react";
 import { balanceOf } from "thirdweb/extensions/erc721";
+import { toast } from "react-toastify";
 
 export const StakeRewards = () => {
   const account = useActiveAccount();
@@ -44,7 +45,7 @@ export const StakeRewards = () => {
       }}
     >
       {!isTokenBalanceLoading && (
-        <p style={{ color: "#ADD8E6" }}>
+        <p style={{ color: "#ADD8E6", marginBottom: "30px" }}>
           지갑 잔액:{" "}
           <span style={{ color: "#FF0000" }}>
             {toEther(BigInt(tokenBalance!.toString()))}
@@ -68,7 +69,15 @@ export const StakeRewards = () => {
           })
         }
         onTransactionConfirmed={() => {
-          alert("Rewards claimed!");
+          toast.success("보상이 성공적으로 수령되었습니다!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
           refetchStakedInfo();
           refetchTokenBalance();
         }}
@@ -83,7 +92,7 @@ export const StakeRewards = () => {
           fontSize: "12px",
         }}
       >
-        Claim Rewards
+        보상 수령하기
       </TransactionButton>
     </div>
   );

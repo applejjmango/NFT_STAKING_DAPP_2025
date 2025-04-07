@@ -4,6 +4,7 @@ import { MediaRenderer, TransactionButton } from "thirdweb/react";
 import { NFT_CONTRACT, STAKING_CONTRACT } from "../utils/contracts";
 import { useState } from "react";
 import { approve } from "thirdweb/extensions/erc721";
+import { toast } from "react-toastify";
 
 type OwnedNFTsProps = {
   nft: NFT;
@@ -28,10 +29,10 @@ export const NFTCard = ({
           borderRadius: "10px",
           marginBottom: "10px",
           height: "200px",
-          width: "200px",
+          width: "200px"
         }}
       />
-      <p style={{ margin: "0 10px 10px 10px" }}>{nft.metadata.name}</p>
+      <p style={{ margin: "0 10px 10px 10px"}}>{nft.metadata.name}</p>
       <button
         onClick={() => setIsModalOpen(true)}
         style={{
@@ -42,10 +43,9 @@ export const NFTCard = ({
           borderRadius: "10px",
           cursor: "pointer",
           width: "100%",
+          fontSize: "12px"
         }}
-      >
-        Stake
-      </button>
+      >스테이킹하기</button>
       {isModalOpen && (
         <div
           style={{
@@ -114,7 +114,18 @@ export const NFTCard = ({
                 style={{
                   width: "100%",
                 }}
-                onTransactionConfirmed={() => setIsApproved(true)}
+                onTransactionConfirmed={() => {
+                  setIsApproved(true);
+                  toast.success("NFT 승인이 완료되었습니다!", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                  });
+                }}
               >
                 승인
               </TransactionButton>
@@ -128,16 +139,24 @@ export const NFTCard = ({
                   })
                 }
                 onTransactionConfirmed={() => {
-                  alert("Staked!");
                   setIsModalOpen(false);
                   refetch();
                   refecthStakedInfo();
+                  toast.success("NFT가 성공적으로 스테이킹되었습니다!", {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                  });
                 }}
                 style={{
                   width: "100%",
                 }}
               >
-                Stake
+                스테이킹하기
               </TransactionButton>
             )}
           </div>
